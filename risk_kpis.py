@@ -6,7 +6,7 @@ from supabase import create_client, Client
 # Carregar variáveis de ambiente
 load_dotenv()
 
-# Create Supabase client
+# Criar Client supabase
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
 
@@ -18,7 +18,7 @@ supabase: Client = create_client(url, key)
 def process_risk_data():
     try:
         # Buscar dados da view
-        response = supabase.table("consolidated_risk_data").select(
+        response = supabase.table("resume_risk_dt").select(
             "user_id, risk_form_id, probabilidade, saude_segurança, meio_ambiente, comunidade, "
             "legal, reputacional, financeiro, operacional, credito, eficiencia"
         ).execute()
@@ -96,10 +96,10 @@ def process_risk_data():
             except Exception as e:
                 print(f"Error processing risk_form_id {row['risk_form_id']}: {e}")
 
-        print(f"Processed {len(rows_to_upsert)} risk records successfully")
+        print(f"Foram processados {len(rows_to_upsert)} com sucesso")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"Um erro ocoreu: {e}")
 
 # Iniciar o processo
 if __name__ == "__main__":
